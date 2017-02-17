@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QCodeDecoder - Image</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <style>
+    .img-responsive {
+      margin: 0 auto;
+      width: 50%;
+    }
+  </style>
+  <script src="libs/qcode-decoder.min.js"></script>
+  <script>
+    var qr = new QCodeDecoder();
+
+    $(document).ready(function(){
+
+      if (!(qr.isCanvasSupported() && qr.hasGetUserMedia())) {
+        alert('Your browser doesn\'t match the required specs.');
+        throw new Error('Canvas and getUserMedia are required');
+      }
+
+      $("#decode").click(function(){
+        var img = $("#qr")[0];
+        qr.decodeFromImage(img, function (err, result) {
+          if (err) throw err;
+
+          $("#results").html(result);
+          $("#myModal").modal('show');
+        });
+      });
+    });
+  </script>
+
+</head>
+<body>
+  <div class="container-fluid">
+    <img id="qr" src="qr.jpg" class='img-responsive'>
+    <button id="decode" type="button" class="btn btn-primary btn-block">Decode Image</button>
+  </div>
+
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">The QR-Code Says</h4>
+        </div>
+        <div class="modal-body">
+          <p id="results"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
+
