@@ -9,6 +9,13 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+  <style>
+    .img-responsive {
+      margin: 0 auto;
+      width: 50%;
+    }
+  </style>
+
   <script src="libs/qcode-decoder.min.js"></script>
   <script>
 
@@ -26,7 +33,9 @@
         function resultHandler (err, result) {
           if (err)
             return console.log(err.message);
-          alert(result);
+          $("#results").html(result);
+          $("#myModal").modal('show');
+
         }
         // prepare a canvas element that will receive
         // the image to decode, sets the callback for
@@ -48,9 +57,32 @@
 
 </head>
 <body>
-  <video autoplay></video>
-  <button id="reset">Reset</button>
-  <button id="stop" >Stop</button>
+  <div class="container-fluid">
+    <video autoplay class='img-responsive'></video>
+    <button id="reset" class="btn btn-warning btn-block">Reset</button>
+    <button id="stop" class="btn btn-danger btn-block">Stop</button>
+  </div>
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">The QR-Code Says</h4>
+        </div>
+        <div class="modal-body">
+          <p id="results"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </body>
 </html>
 
